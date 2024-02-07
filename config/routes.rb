@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   resources :registrations, only: [:create,:index]
   resources :users, only: [:index]
   resources :properties
+  resources :favorites, only: [:create, :destroy]
 end

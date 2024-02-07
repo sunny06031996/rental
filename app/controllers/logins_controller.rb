@@ -11,7 +11,6 @@ class LoginsController < ApplicationController
 		token = authenticate_account
 		response.set_header('Authorization', "Bearer #{token}")
 		redirect_to users_path(auth_token: token)
-		redirect_to properties_path(auth_token: token)
 	end 
 
 	private
