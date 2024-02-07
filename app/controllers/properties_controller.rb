@@ -3,10 +3,11 @@ class PropertiesController < ApplicationController
 	before_action :set_property, only: [:show, :update, :destroy]
 
 	def index
-    @properties = Property.all
 		if @current_user.role.eql?"admin_user"
+			@properties = @current_user.properties.all
      	render 'properties/index_for_admin'
     else
+    	@properties = Property.all
     	render 'properties/index_for_user'
     end  	
   end
@@ -17,14 +18,13 @@ class PropertiesController < ApplicationController
   end
 
   def create
-    @property = Property.new(property_params)
-    respond_to do |format|
-	    if @property.save
-	      format.html { redirect_to(@property, :notice => 'property was created successfully!') }
-	    else 
-	      format.html { render :action => "new" }
-	    end
-	  end
+    @property = @current_user.properties.new(property_params)
+    if @property.save
+    	flash[:success] = "Property was created successfully!"
+    	redirect_to properties_path(auth_token: params[:auth_token])
+    else 
+    	render 'properties/new'
+    end 
   end
 
   def show
@@ -57,5 +57,3 @@ class PropertiesController < ApplicationController
     params.require(:@property).permit(:rent_per_month, :city, :district, :beds_number, :name, :types, :mrt_line_station)
   end
 end
-				# if params[:query].present?
-		    # 	@properties = Property.all.where("name LIKE :search OR city LIKE :search OR  district LIKE :search ", search: "%#{params[:query]}%")

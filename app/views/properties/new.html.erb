@@ -7,10 +7,11 @@
 <body>
   <h1> New property </h1>
   <%= form_for :@property, url: properties_path, method: "post", html: { class: "your-form-class" } do |f| %>
+  	<%= hidden_field_tag :auth_token, params[:auth_token] %>
     name: <%= f.text_field :name %><br><br>
     districts: <%= f.text_field :district %><br><br>
     city: <%= f.text_field :city %><br><br>
-    property_type:<%= f.select :property_type, Property.types.keys %><br><br>
+    property:<%= f.select :types, Property.types.keys %><br><br>
     mrt_line_station: <%= f.text_field :mrt_line_station %><br><br>
     beds_number: <%= f.number_field :beds_number %><br><br>
     rent_per_month: <%= f.number_field :rent_per_month %><br><br>
