@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Properties</title>
+  <style>
+    /* Add your CSS styles here */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .property {
+      background-color: #ffffff;
+    }
+
+    .property:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Properties</h1>
+  <form action="/properties" method="get">
+    <label for="query">Search:</label>
+    <input type="text" id="query" name="query">
+    <button type="submit">Search</button>
+  </form><br>
+  <%= render partial: 'properties_table', locals: { properties: @properties } %>
+</body>
+</html>

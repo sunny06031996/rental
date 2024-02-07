@@ -10,7 +10,8 @@ class LoginsController < ApplicationController
 		@account = User.find_by(email: params[:@user][:email])
 		token = authenticate_account
 		response.set_header('Authorization', "Bearer #{token}")
-		redirect_to users_path(auth_token: token)
+		redirect_to properties_path(auth_token: token)
+		#render properties/index.html.erb
 	end 
 
 	private

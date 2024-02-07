@@ -1,0 +1,23 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>City</th>
+    <th>District</th>
+    <th>Beds Number</th>
+    <th>Type</th>
+    <th>MRT</th>
+    <th>Rent Per Month</th>
+
+  </tr>
+  <% properties.each do |property| %>
+    <tr class="property">
+      <td><%= property.name %></td>
+      <td><%= property.city %></td>
+      <td><%= property.district %></td>
+      <td><%= property.beds_number %></td>
+      <td><%= property.types %></td>
+      <td><%= property.mrt_line_station %></td>
+      <td><%= property.rent_per_month %></td>
+    </tr>
+  <% end %>
+</table>
