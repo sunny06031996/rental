@@ -1,0 +1,16 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+<body>
+  <h1>Login</h1>
+  <%= form_for :@user, url: logins_login_path, method: "post", html: { class: "your-form-class" } do |f| %>
+    Email: <%= f.text_field :email %><br><br>
+    Password: <%= f.password_field :password %><br><br>
+    Password Confirmation: <%= f.password_field :password_confirmation %><br><br>
+    <%= f.submit "Submit" %>
+  <% end %>
+</body>
+</html>

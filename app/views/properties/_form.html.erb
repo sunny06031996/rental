@@ -1,0 +1,34 @@
+<%= form_with(model: property, local: true) do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+  </div>
+
+  <div>
+    <%= form.label :district %>
+    <%= form.text_field :district %>
+  </div>
+
+  <div>
+    <%= form.label :property_type %>
+    <%= form.select :property_type, Property..keys %>
+  </div>
+
+  <div>
+    <%= form.label :beds_number %>
+    <%= form.number_field :price %>
+  </div>
+
+  <div>
+    <%= form.label :mrt_line_station %>
+    <%= form.text_field :mrt_line_station %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

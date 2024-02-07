@@ -1,0 +1,21 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>update Property</title>
+</head>
+<body>
+  <h1> update property </h1>
+  <%byebug%>
+  <%= form_for :@property, url: properties_path(@property.id), method: "update", html: { class: "your-form-class" } do |f| %>
+    name: <%= f.text_field :name %><br><br>
+    district: <%= f.text_field :district %><br><br>
+    city: <%= f.text_field :city %><br><br>
+    property_type:<%= f.select :property_type, Property.type.keys %><br><br>
+    mrt_line_station: <%= f.text_field :mrt_line_station %><br><br>
+    beds_number: <%= f.number_field :beds_number %><br><br>
+    rent_per_month: <%= f.number_field :rent_per_month %><br><br>
+    <%= f.submit "Submit" %>
+  <% end %>
+</body>
+</html>

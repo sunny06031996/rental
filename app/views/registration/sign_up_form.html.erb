@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+<body>
+  <h1>Signup</h1>
+  <%= form_for :@user, url: registrations_path, method: "post", html: { class: "your-form-class" } do |f| %>
+    Email: <%= f.text_field :email %><br><br>
+    Name: <%= f.text_field :name %><br><br>
+    Role: <%= f.select :role, options_for_select([['Admin', 'admin_user'], ['User', 'user']]) %><br><br>
+    Password: <%= f.password_field :password %><br><br>
+    Password Confirmation: <%= f.password_field :password_confirmation %><br><br>
+    <%= f.submit "Submit" %>
+  <% end %>
+</body>
+</html>
