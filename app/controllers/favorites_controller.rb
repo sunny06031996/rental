@@ -1,6 +1,5 @@
 class FavoritesController < ApplicationController
-	before_action :authenticate_request
-
+	
 	def create
     @property = Property.find(params[:property_id])
     @current_user.favorites.create(property: @property)

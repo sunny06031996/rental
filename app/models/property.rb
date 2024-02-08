@@ -2,7 +2,7 @@ class Property < ApplicationRecord
   enum types: { Residential: 0, Office: 1, Rental: 2 }
   validates :name, presence: true
   belongs_to :user
-  has_many :favorite_propertes, through: :favorites, source: :user
+  has_many :favorites
 
 
   #before_action :authorize_admin

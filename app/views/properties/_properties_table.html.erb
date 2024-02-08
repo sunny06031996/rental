@@ -1,5 +1,16 @@
+<style>
+  .action-buttons {
+    white-space: nowrap;
+  }
+
+  .action-buttons a {
+    margin-right: 10px; 
+  }
+</style>
+
 <table>
   <tr>
+  	<th>Id</th>
     <th>Name</th>
     <th>City</th>
     <th>District</th>
@@ -7,7 +18,7 @@
     <th>Type</th>
     <th>MRT</th>
     <th>Rent Per Month</th>
-
+    <th>Action</th> 
   </tr>
   <% properties.each do |property| %>
     <tr class="property">
@@ -19,6 +30,23 @@
       <td><%= property.types %></td>
       <td><%= property.mrt_line_station %></td>
       <td><%= property.rent_per_month %></td>
+      <% if @current_user.role.eql?"admin_user" %>
+        <td class="action-buttons">
+          <%= link_to "Edit", edit_property_path(property, auth_token: params[:auth_token]) %>
+          <%= link_to "Delete", property_path(property, auth_token: params[:auth_token]), method: :delete, data: { confirm: "Are you sure?" } %>
+           <%= link_to "View", property_path(property, auth_token: params[:auth_token])%>
+        </td>
+      <%else%>
+				<td class="action-buttons">
+				  <%= link_to "View", property_path(property, auth_token: params[:auth_token])%>
+	        <% if @current_user.favorites.pluck(:property_id).include?property.id %>
+	        <% favorite = @current_user.favorites.find_by(property_id: property.id) %>
+	          <%= link_to "Remove Favorite", "/favorites/#{favorite.id}?auth_token=#{params[:auth_token]}", method: :destroy, class: "remove-favorite" %>
+	        <% else %>
+	          <%= link_to "Favorite", favorites_path(auth_token: params[:auth_token]) %>
+	        <% end %>
+      	</td>
+      <% end %>
     </tr>
   <% end %>
 </table>

@@ -1,6 +1,5 @@
 class PropertiesController < ApplicationController
-	#before_action :authenticate_request
-	before_action :set_property, only: [:show, :update, :destroy]
+	before_action :set_property, only: [ :update,:edit,:show]
 
 	def index
 		if @current_user.role.eql?"admin_user"
@@ -9,16 +8,21 @@ class PropertiesController < ApplicationController
     else
     	@properties = Property.all
     	render 'properties/index_for_user'
-    end  	
+    end
   end
 
-
   def new
+  	@property = Property.new
     render 'properties/new'
   end
 
+  def show
+ 
+  end
+
   def create
-    @property = @current_user.properties.new(property_params)
+  	@property = @current_user.properties.new(property_params.merge(city: params["property"]["city"]&.downcase!,
+  	  district: params["property"]["district"]&.downcase!))
     if @property.save
     	flash[:success] = "Property was created successfully!"
     	redirect_to properties_path(auth_token: params[:auth_token])
@@ -27,25 +31,36 @@ class PropertiesController < ApplicationController
     end 
   end
 
-  def show
-  	@property = Property.find(params[:id])
+  def edit 
+  	render 'properties/edit'
   end
 
   def update
     if @property.update(property_params)
-    	respond_to do |format|
-    		format.html { redirect_to(@property.id,
-       :notice => 'Property was updated successfully !')}
-    	end	
+    	redirect_to properties_path(auth_token: params[:auth_token])
     else
-      render :edit
+      redirect_to edit_property_path(@property, auth_token: params[:auth_token]) 
     end
   end
 
   def destroy
-    @property.destroy
+  	@property.destroy
+    redirect_to properties_path, notice: 'Property was deleted successfully!'
   end
 
+  def search_property
+    @properties = Property.all
+    filter_params = {}
+    filter_params[:city] = normalize_data(params[:city]) if params[:city].present?
+    filter_params[:district] = normalize_data(params[:district]) if params[:district].present?
+    filter_params[:beds_number] = params[:beds_number].to_i if params[:beds_number].present?
+    filter_params[:rent_per_month] = params[:rent_per_month].to_i if params[:rent_per_month].present?
+    filter_params[:mrt_line_station] = params[:mrt_line_station] if params[:mrt_line_station].present?
+    byebug
+    filter_params[:types] = params[:types].capitalize if params[:types].present?
+    @properties = @properties.where(filter_params)
+    render 'properties/index_for_user'
+  end
 
   private
 
@@ -54,6 +69,10 @@ class PropertiesController < ApplicationController
   end
 
   def property_params
-    params.require(:@property).permit(:rent_per_month, :city, :district, :beds_number, :name, :types, :mrt_line_station)
+    params.require(:property).permit(:rent_per_month, :city, :district, :beds_number, :name, :types, :mrt_line_station)
+  end
+
+  def normalize_data(data)
+    data&.downcase
   end
 end
