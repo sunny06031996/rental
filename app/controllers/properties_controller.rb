@@ -56,7 +56,6 @@ class PropertiesController < ApplicationController
     filter_params[:beds_number] = params[:beds_number].to_i if params[:beds_number].present?
     filter_params[:rent_per_month] = params[:rent_per_month].to_i if params[:rent_per_month].present?
     filter_params[:mrt_line_station] = params[:mrt_line_station] if params[:mrt_line_station].present?
-    # byebug
     filter_params[:types] = params[:types].capitalize if params[:types].present?
     @properties = @properties.where(filter_params)
     render 'properties/index_for_user'
