@@ -1,5 +1,5 @@
 class FavoritesController < ApplicationController
-
+	
 	def create
     @property = Property.find(params[:property_id])
     @current_user.favorites.create(property: @property)
@@ -10,5 +10,9 @@ class FavoritesController < ApplicationController
     @favorite = Favorite.find_by(id: params[:id])
     @favorite.destroy
     redirect_to properties_path(auth_token: params[:auth_token])
+  end
+
+  def favourite_properties
+    render 'properties/index_favorite_properties'
   end
 end

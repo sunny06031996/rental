@@ -1,0 +1,53 @@
+<style>
+      /* Add your CSS styles here */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      .property {
+        background-color: #ffffff;
+      }
+
+      .property:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    </style>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>City</th>
+    <th>District</th>
+    <th>Beds Number</th>
+    <th>Type</th>
+    <th>MRT</th>
+    <th>Rent Per Month</th>
+    <th>Action</th> 
+  </tr>
+  <% @current_user.favorites.each do |favorite| %>
+    <% property = favorite.property %>
+    <tr class="property">
+      <td><%= property.name %></td>
+      <td><%= property.city %></td>
+      <td><%= property.district %></td>
+      <td><%= property.beds_number %></td>
+      <td><%= property.types %></td>
+      <td><%= property.mrt_line_station %></td>
+      <td><%= property.rent_per_month %></td>
+      <td class="action-buttons">
+        <%= link_to "View", property_path(property, auth_token: params[:auth_token]) %>
+        <%= button_to "Remove Favorite", favorite_path(auth_token: params[:auth_token], id: favorite.id), method: :delete, class: "remove-favorite" %>
+      </td>
+    </tr>
+  <% end %>
+</table>

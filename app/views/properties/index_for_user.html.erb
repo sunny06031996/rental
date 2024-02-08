@@ -46,5 +46,6 @@
 	    <button type="submit">Search</button>
 	  </form><br>
 	  <%= render partial: 'properties_table', locals: { properties: @properties } %>
+	  <%= link_to "View Favorite Properties", favourite_properties_favorites_path(auth_token: params[:auth_token]), method: :get %>
 	</body>
 </html>

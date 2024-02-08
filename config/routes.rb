@@ -14,5 +14,9 @@ Rails.application.routes.draw do
       get 'search_property'
     end
   end
-  resources :favorites, only: [:create, :destroy]
+  resources :favorites, only: [:create, :destroy] do
+    collection do
+      get 'favourite_properties'
+    end
+  end
 end
