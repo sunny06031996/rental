@@ -21,4 +21,4 @@ class LoginsController < ApplicationController
       return token
     end
   end
-end 
+end

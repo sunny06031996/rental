@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-	
+
 	skip_before_action :authenticate_request
 
 
@@ -17,5 +17,5 @@ class RegistrationsController < ApplicationController
 
   def user_params
   	params[:@user].permit(:name, :email,:role, :password,:password_confirmation)
-  end 
-end 
+  end
+end
