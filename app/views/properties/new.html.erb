@@ -6,7 +6,7 @@
 </head>
 <body>
   <h1> New property </h1>
-  <%= form_for :@property, url: properties_path, method: "post", html: { class: "your-form-class" } do |f| %>
+  <%= form_for @property, url: properties_path, method: "post", html: { class: "your-form-class" } do |f| %>
   	<%= hidden_field_tag :auth_token, params[:auth_token] %>
     name: <%= f.text_field :name %><br><br>
     districts: <%= f.text_field :district %><br><br>

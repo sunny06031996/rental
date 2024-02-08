@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Our Site</title>
+  <style>
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to rental service</h1>
+  
+  <!-- Login and Signup buttons -->
+  <div>
+    <%= link_to "Login", new_login_path, class: "button" %>
+    <%= link_to "Signup", new_registration_path, class: "button" %>
+  </div>
+</body>
+</html>
