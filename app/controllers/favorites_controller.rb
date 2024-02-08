@@ -1,14 +1,14 @@
 class FavoritesController < ApplicationController
-	
+
 	def create
     @property = Property.find(params[:property_id])
     @current_user.favorites.create(property: @property)
-    redirect_to @property, notice: 'Added to favorites.'
+    redirect_to properties_path(auth_token: params[:auth_token])
 	end
 
   def destroy
-    @favorite = @current_user.favorites.find_by(property_id: params[:id])
+    @favorite = Favorite.find_by(id: params[:id])
     @favorite.destroy
-    redirect_to @favorite.property, notice: 'Removed from favorites.'
+    redirect_to properties_path(auth_token: params[:auth_token])
   end
 end

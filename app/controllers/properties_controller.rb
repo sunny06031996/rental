@@ -1,5 +1,5 @@
 class PropertiesController < ApplicationController
-	before_action :set_property, only: [ :update,:edit,:show]
+	before_action :set_property, only: [ :update,:edit,:show, :destroy]
 
 	def index
 		if @current_user.role.eql?"admin_user"
@@ -21,8 +21,8 @@ class PropertiesController < ApplicationController
   end
 
   def create
-  	@property = @current_user.properties.new(property_params.merge(city: params["property"]["city"]&.downcase!,
-  	  district: params["property"]["district"]&.downcase!))
+  	@property = @current_user.properties.new(property_params.merge(city: params["property"]["city"]&.downcase,
+  	  district: params["property"]["district"]&.downcase))
     if @property.save
     	flash[:success] = "Property was created successfully!"
     	redirect_to properties_path(auth_token: params[:auth_token])
@@ -45,7 +45,7 @@ class PropertiesController < ApplicationController
 
   def destroy
   	@property.destroy
-    redirect_to properties_path, notice: 'Property was deleted successfully!'
+    redirect_to properties_path(auth_token: params[:auth_token]), notice: 'Property was deleted successfully!'
   end
 
   def search_property
@@ -56,7 +56,7 @@ class PropertiesController < ApplicationController
     filter_params[:beds_number] = params[:beds_number].to_i if params[:beds_number].present?
     filter_params[:rent_per_month] = params[:rent_per_month].to_i if params[:rent_per_month].present?
     filter_params[:mrt_line_station] = params[:mrt_line_station] if params[:mrt_line_station].present?
-    byebug
+    # byebug
     filter_params[:types] = params[:types].capitalize if params[:types].present?
     @properties = @properties.where(filter_params)
     render 'properties/index_for_user'
@@ -65,7 +65,7 @@ class PropertiesController < ApplicationController
   private
 
   def set_property
-    @property = Property.find(params[:id])
+    @property = Property.find_by_id(params[:id])
   end
 
   def property_params
